@@ -24,7 +24,6 @@ michelle
 tigger
 sunshine
 chocolate
-saut-admin
 password1
 soccer
 anthony
@@ -45,8 +44,6 @@ carlos
 jennifer
 joshua
 bubbles
-mimosapudica
-@osim-admin2018**
 1234567890
 superman
 hannah
