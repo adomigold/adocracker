@@ -71,7 +71,7 @@ if args.service == "http":
                     print('[+]', user, '_', pwd)
                 post = {'username': user, 'password': pwd, 'submit': "Submit"}
                 re = requests.post(target, data=post)
-                if "success" in re.text:
+                if "Success" in re.text:
                     print("\033[1;32;40m Password found", pwd)
                     break
 
