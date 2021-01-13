@@ -1,5 +1,4 @@
 import requests
-import threading
 import sys
 from pyfiglet import figlet_format
 import argparse
@@ -7,7 +6,7 @@ import argparse
 banner = "AdoCracker"
 print(figlet_format(banner, font="standard"))
 print("This is a password cracker tool for HTTP, FTP, SSH and SMTP")
-print("Author @adolphgasper,", "Github account: https://github.com/adomigold/ \n")
+print("Author @adomigold,", "Github account: https://github.com/adomigold/ \n")
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-a', '--attack', type=str, help="Target url or IP adress")
