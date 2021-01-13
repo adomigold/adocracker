@@ -6,7 +6,7 @@ This is a one file python password cracker which use wordlist to crack passwords
 git clone https://github.com/adomigold/adocracker.git
 pip3 install -r requrements.txt
 
-# sage:
+# Usage:
 python3 adocracker.py --help
 
 # Notice: 
