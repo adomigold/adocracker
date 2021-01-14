@@ -60,7 +60,7 @@ if args.service == "http":
                 print("\n-----------------------------------------"
                       "\n Username found", '\033[1;92m', user,
                       "\n-----------------------------------------")
-                brea
+                break
         else:
             print("------------------------------------------------------------------"
                   "\n Sorry No password or username found on your wordlist"
@@ -94,7 +94,7 @@ if args.service == "http":
                     print("\n------------------------------------------------"
                           "\n Username and Password found", '\033[1;92m', pwd,
                           "\n------------------------------------------------")
-                    brea
+                    break
         else:
             print("------------------------------------------------------------------"
                   "\n Sorry No password or username found on your wordlist"
