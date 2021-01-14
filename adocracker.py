@@ -4,6 +4,7 @@ import sys
 from pyfiglet import figlet_format
 import argparse
 import time
+import nmap
 
 banner = "AdoCracker"
 print(figlet_format(banner, font="standard"))
@@ -19,7 +20,8 @@ parser.add_argument('-P', '--password_file', type=str, help="File contains passw
 parser.add_argument('-t', '--threads', type=str, help="Thread connection")
 parser.add_argument('-v', '--verbose', nargs='?', help="Enter show to see login attempts")
 parser.add_argument('-s', '--service', type=str, help="Acceptable services are http, ftp, ssh and smtp")
-parser.add_argument('--response', type=str, help="Web response after login failed attempt")
+parser.add_argument('-r', '--response', type=str, help="Web response after login failed attempt")
+parser.add_argument('-o', '--open', type=int, help="SSH, FTP and SMTP ports")
 args = parser.parse_args()
 
 if len(sys.argv) < 2:
@@ -137,8 +139,17 @@ if args.service == "http":
 
 # Attacking SSH
 if args.service == "ssh":
+    # check if port number is provided
+    if args.open not in sys.argv:
+        print("\n-----------------------------------------"
+              "\n '\033[1;33m'Please specify port for SSH              "
+              "\n------------------------------------------")
+        exit(0)
     target = args.attack
+    port = args.open
     username = args.login
     username_file = args.username_file
     password = args.password
     password_file = args.password_file
+
+    #Check if SSH port is open
