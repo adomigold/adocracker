@@ -122,7 +122,7 @@ if args.service == "http":
                 pass
             else:
                 print("\n-----------------------------------------"
-                      "\n Password found", '\033[92m'+ pwd,
+                      "\n Password found", '\033[1;92m',pwd,
                       "\n-----------------------------------------")
                 break
         else:
