@@ -57,7 +57,9 @@ if args.service == "http":
             if "Incorrect Login Information" in re.text:  # Change this according to the server respond when login attempt failed
                 pass
             else:
-                print("\033[1;32;40m Password found", pwd)
+                print("\n-----------------------------------------"
+                      "\n Username found", '\033[1;92m', user,
+                      "\n-----------------------------------------")
                 brea
         else:
             print("------------------------------------------------------------------"
@@ -90,7 +92,9 @@ if args.service == "http":
                 if "Incorrect Login Information" in re.text:  # Change this according to the server respond when login attempt failed
                     pass
                 else:
-                    print("\033[1;32;40m Password found", pwd)
+                    print("\n------------------------------------------------"
+                          "\n Username and Password found", '\033[1;92m', pwd,
+                          "\n------------------------------------------------")
                     brea
         else:
             print("------------------------------------------------------------------"
