@@ -106,7 +106,7 @@ if args.service == "http":
 
     # When password file provided
     else:
-        print("------------------------------"
+        print("\033[1;34m------------------------------"
               "\n     adocracker is started      "
               "\nTake a cup of coffee and wait"
               "\n------------------------------")
@@ -120,14 +120,14 @@ if args.service == "http":
                 if args.verbose != "show":
                     break
 
-                print('[+]', username, '_', pwd)
+                print('\033[1;37m''[+]', username, '_', pwd)
             post = {'username': username, 'password': pwd, 'submit': "Submit"}
             re = requests.post(target, data=post)
             if "Incorrect Login Information" in re.text: # Change this according to the server respond when login attempt failed
                 pass
             else:
-                print("\n-----------------------------------------"
-                      "\n Password found", '\033[1;92m',pwd,
+                print("\n\033[1;92m-----------------------------------------"
+                      "\n Password found:", pwd,
                       "\n------------------------------------------")
                 break
         else:
@@ -141,8 +141,8 @@ if args.service == "http":
 if args.service == "ssh":
     # check if port number is provided
     if args.open not in sys.argv:
-        print("\n-----------------------------------------"
-              "\n '\033[1;33m'Please specify port for SSH              "
+        print("\033[1;31m-----------------------------------------"
+              "\n Please specify port for SSH              "
               "\n------------------------------------------")
         exit(0)
     target = args.attack
