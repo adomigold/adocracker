@@ -21,7 +21,7 @@ parser.add_argument('-t', '--threads', type=str, help="Thread connection")
 parser.add_argument('-v', '--verbose', nargs='?', help="Enter show to see login attempts")
 parser.add_argument('-s', '--service', type=str, help="Acceptable services are http, ftp, ssh and smtp")
 parser.add_argument('-r', '--response', type=str, help="Web response after login failed attempt")
-parser.add_argument('-o', '--open', type=int, help="SSH, FTP and SMTP ports")
+parser.add_argument('-o', '--port', type=int, help="SSH, FTP and SMTP ports")
 args = parser.parse_args()
 
 if len(sys.argv) < 2:
@@ -140,16 +140,36 @@ if args.service == "http":
 # Attacking SSH
 if args.service == "ssh":
     # check if port number is provided
-    if args.open not in sys.argv:
+    if args.port in sys.argv is None:
         print("\033[1;31m-----------------------------------------"
               "\n Please specify port for SSH              "
               "\n------------------------------------------")
         exit(0)
     target = args.attack
-    port = args.open
+    port = args.port
     username = args.login
     username_file = args.username_file
     password = args.password
     password_file = args.password_file
 
     #Check if SSH port is open
+    a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    location = (target, port)
+    try:
+        print("\033[1;35m-----------------------------------------"
+              "\n We are checking if port is open...              "
+              "\n------------------------------------------")
+        conn = a_socket.connect_ex(location)
+        if conn == 0:
+            print("\033[1;33m-----------------------------------------"
+                  "\n Port is open... We proceed :)              "
+                  "\n------------------------------------------")
+        else:
+            print("\033[1;31m-----------------------------------------"
+                  "\n Sorry port is not open, check again :(          "
+                  "\n-------------------------------------------------")
+        a_socket.close()
+    except:
+        print("\033[1;31m-----------------------------------------"
+              "\n Please specify port for SSH                     "
+              "\n-------------------------------------------------")
