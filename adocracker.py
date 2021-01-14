@@ -87,7 +87,6 @@ if args.service == "http":
                     print('[+]', user, '_', pwd)
                 post = {'username': user, 'password': pwd, 'submit': "Submit"}
                 re = requests.post(target, data=post)
-                print(re.text)
                 break
                 if "Incorrect Login Information" in re.text:  # Change this according to the server respond when login attempt failed
                     pass
