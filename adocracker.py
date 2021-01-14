@@ -155,7 +155,7 @@ if args.service == "ssh":
     a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     location = (target, port)
     try:
-        print("\033[1;3 We are checking if port is open...")
+        print("\033[1;35m We are checking if port is open...")
         conn = a_socket.connect_ex(location)
         if conn == 0:
             print("\033[1;33m Port is open... We proceed")
