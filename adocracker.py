@@ -139,12 +139,11 @@ if args.service == "http":
 
 # Attacking SSH
 if args.service == "ssh":
-    # check if port number is provided
-    if args.port in sys.argv is None:
-        print("\033[1;31m-----------------------------------------"
-              "\n Please specify port for SSH              "
-              "\n------------------------------------------")
-        exit(0)
+    print("\033[1;34m------------------------------"
+          "\n     adocracker is started      "
+          "\nTake a cup of coffee and wait"
+          "\n------------------------------")
+
     target = args.attack
     port = args.port
     username = args.login
@@ -156,14 +155,10 @@ if args.service == "ssh":
     a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     location = (target, port)
     try:
-        print("\033[1;35m------------------------------------------"
-              "\n We are checking if port is open...       "
-              "\n------------------------------------------")
+        print("\033[1;3 We are checking if port is open...")
         conn = a_socket.connect_ex(location)
         if conn == 0:
-            print("\033[1;33m------------------------------------------"
-                  "\n Port is open... We proceed :)            "
-                  "\n------------------------------------------")
+            print("\033[1;33m Port is open... We proceed")
         else:
             print("\033[1;31m-------------------------------------------------"
                   "\n Sorry port is not open, check again :(          "
