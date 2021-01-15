@@ -98,15 +98,15 @@ if args.service == "http":
                 if args.response in re.text:  # Change this according to the server respond when login attempt failed
                     pass
                 else:
-                    print("\n\033[1;92m----------------------------------------------------"
+                    print("\n\033[1;92m-----------------------------------------------------------"
                           "\n Username and Password found:", user, "=>", pwd,
-                          "----------------------------------------------------------")
+                         "----------------------------------------------------------")
                     break
             else:
-                print("------------------------------------------------------------------"
+                print(" ---------------------------------------------------------------------"
                         "\n Sorry No password or username found on your wordlist"
                          "\n Please provide wordlist with more words to increase your chance"
-                        "\n----------------------------------------------------------------")
+                        "\n-----------------------------------------------------------------")
                 exit(0)
 
     # When password file provided
