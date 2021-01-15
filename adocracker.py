@@ -51,7 +51,7 @@ if args.service == "http":
     if args.password in sys.argv:
         print("\033[1;34m------------------------------"
               "\n     adocracker is started      "
-              "\nTake a cup of coffee and wait"
+              "\n  Take a cup of coffee and wait"
               "\n------------------------------")
         file = open(username_file)
         user_list = file.readlines()
@@ -84,7 +84,7 @@ if args.service == "http":
     elif args.colon_file in sys.argv:
         print("\033[1;34m------------------------------"
               "\n     adocracker is started      "
-              "\nTake a cup of coffee and wait"
+              "\n  Take a cup of coffee and wait"
               "\n------------------------------")
         file = open(colon_file)
         for line in file.readlines():
@@ -115,7 +115,7 @@ if args.service == "http":
     else:
         print("\033[1;34m------------------------------"
               "\n     adocracker is started      "
-              "\nTake a cup of coffee and wait"
+              "\n  Take a cup of coffee and wait"
               "\n------------------------------")
         file = open(password_file)
         pwd_list = file.readlines()
@@ -150,7 +150,7 @@ if args.service == "http":
 if args.service == "ssh":
     print("\033[1;34m------------------------------"
           "\n     adocracker is started      "
-          "\nTake a cup of coffee and wait"
+          "\n  Take a cup of coffee and wait"
           "\n------------------------------")
 
     target = args.attack
