@@ -151,7 +151,7 @@ if args.service == "http":
         exit(0)
 
 # Attacking SSH
-if args.service == "ssh":
+elif args.service == "ssh":
     try:
         print("\033[1;34m---------------------------------"
               "\n     adocracker is started      "
