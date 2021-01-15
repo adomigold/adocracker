@@ -77,7 +77,7 @@ if args.service == "http":
                           "\n-----------------------------------------")
                     break
             else:
-                print("------------------------------------------------------------------"
+                print("\n\033[1;31m------------------------------------------------------------------"
                       "\n Sorry No password or username found on your wordlist"
                       "\n Please provide wordlist with more words to increase your chance"
                       "\n----------------------------------------------------------------")
@@ -108,10 +108,10 @@ if args.service == "http":
                              "----------------------------------------------------------")
                         break
                 else:
-                    print(" ---------------------------------------------------------------------"
-                            "\n Sorry No password or username found on your wordlist"
-                             "\n Please provide wordlist with more words to increase your chance"
-                            "\n-----------------------------------------------------------------")
+                    print("\n\033[1;31m------------------------------------------------------------------"
+                          "\n Sorry No password or username found on your wordlist"
+                          "\n Please provide wordlist with more words to increase your chance"
+                          "\n----------------------------------------------------------------")
                     exit(0)
 
         # When password file provided
@@ -141,7 +141,7 @@ if args.service == "http":
                           "\n------------------------------------------")
                     break
             else:
-                print("------------------------------------------------------------------"
+                print("\n\033[1;31m------------------------------------------------------------------"
                       "\n Sorry No password or username found on your wordlist"
                       "\n Please provide wordlist with more words to increase your chance"
                       "\n----------------------------------------------------------------")
@@ -189,7 +189,7 @@ if args.service == "ssh":
                             print('\033[1;37m''[+]', user, '_', password)
                         return False
                     except paramiko.ssh_exception.NoValidConnectionsError :
-                        print(f"\n\033[1;33m[*] Connection timeout, The script will restart connection in delay... Press CTRL+c to cancel")
+                        print(f"\n\033[1;33m[*] Connection timeout, The script will restart connection in 10 seconds... Press CTRL+c to cancel")
                         time.sleep(10)
                         return open_ssh(target, port, user, password)
                     except paramiko.ssh_exception.SSHException:
@@ -205,7 +205,7 @@ if args.service == "ssh":
         print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
         exit(0)
     else:
-        print("------------------------------------------------------------------"
+        print("\n\033[1;31m------------------------------------------------------------------"
               "\n Sorry No password or username found on your wordlist"
               "\n Please provide wordlist with more words to increase your chance"
               "\n----------------------------------------------------------------")
