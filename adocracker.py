@@ -192,9 +192,6 @@ if args.service == "ssh":
                         print(f"[*] Connection timeout, The script will restart connection in delay...")
                         time.sleep(10)
                         return open_ssh(target, port, user, password)
-                    except KeyboardInterrupt:
-                        print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
-                        exit(0)
                     else:
                         print(f"Password found : {password}")
                         return True
