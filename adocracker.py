@@ -79,13 +79,13 @@ if args.service == "http":
         file = open(colon_file)
         for line in file.readlines():
             if ":" in line:
-                user = line.rsplit(':')[0]
-                pwd = line.rsplit(':')[1]
+                user = line.split(':')[0]
+                pwd = line.split(':')[1]
                 if args.verbose in sys.argv:
                     if args.verbose != "show":
                         break
                     print('[+]', user, '_', pwd)
-                post = {f'{form1}': user, f'{form2}': pwd, 'submit': "Submit"}
+                post = {f'{form1}': user, f'{form2}': pwd.strip(), 'submit': "Submit"}
                 re = requests.post(target, data=post)
                 if args.response in re.text:  # Change this according to the server respond when login attempt failed
                     pass
@@ -119,6 +119,8 @@ if args.service == "http":
 
                 print('\033[1;37m''[+]', username, '_', pwd)
             post = {f'{form1}': username, f'{form2}': pwd, 'submit': "Submit"}
+            print(post)
+            break
             re = requests.post(target, data=post)
             if args.response in re.text: # Change this according to the server respond when login attempt failed
                 pass
