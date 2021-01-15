@@ -78,9 +78,9 @@ if args.service == "http":
                     break
             else:
                 print("\n\033[1;31m------------------------------------------------------------------"
-                      "\n Sorry No password or username found on your wordlist"
+                      "\n Sorry!! No password or username found on your wordlist"
                       "\n Please provide wordlist with more words to increase your chance"
-                      "\n----------------------------------------------------------------")
+                      "\n------------------------------------------------------------------")
                 exit(0)
 
         # When colon file is provided
@@ -109,9 +109,9 @@ if args.service == "http":
                         break
                 else:
                     print("\n\033[1;31m------------------------------------------------------------------"
-                          "\n Sorry No password or username found on your wordlist"
+                          "\n Sorry!! No password or username found on your wordlist"
                           "\n Please provide wordlist with more words to increase your chance"
-                          "\n----------------------------------------------------------------")
+                          "\n------------------------------------------------------------------")
                     exit(0)
 
         # When password file provided
@@ -142,9 +142,9 @@ if args.service == "http":
                     break
             else:
                 print("\n\033[1;31m------------------------------------------------------------------"
-                      "\n Sorry No password or username found on your wordlist"
+                      "\n Sorry!! No password or username found on your wordlist"
                       "\n Please provide wordlist with more words to increase your chance"
-                      "\n----------------------------------------------------------------")
+                      "\n------------------------------------------------------------------")
                 exit(0)
     except KeyboardInterrupt:
         print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
