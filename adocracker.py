@@ -70,7 +70,7 @@ if args.service == "http":
                 pass
             else:
                 print("\n\033[1;92m-----------------------------------------"
-                      "\n Username found", user,
+                      "\n Username found:", user,
                       "\n-----------------------------------------")
                 break
         else:
