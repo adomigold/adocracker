@@ -197,7 +197,7 @@ if args.service == "ssh":
                         exit(0)
                     else:
                         print("\n\033[1;92m-----------------------------------------"
-                              "\n Password found:", password,
+                              "\n Username found:", user,
                               "\n------------------------------------------")
                         exit(0)
                 open_ssh(target, port, user, password)
