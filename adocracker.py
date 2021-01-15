@@ -92,7 +92,7 @@ if args.service == "http":
                 if args.verbose in sys.argv:
                     if args.verbose != "show":
                         break
-                    print('\033[1;37m''[+]', username, '_', pwd)
+                    print('\033[1;37m''[+]', user, '_', pwd)
                 post = {f'{form1}': user, f'{form2}': pwd.strip(), 'submit': "Submit"}
                 re = requests.post(target, data=post)
                 if args.response in re.text:  # Change this according to the server respond when login attempt failed
