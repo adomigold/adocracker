@@ -47,6 +47,10 @@ if args.service == "http":
 
     # When single password provided
     if args.password in sys.argv:
+        print("\033[1;34m------------------------------"
+              "\n     adocracker is started      "
+              "\nTake a cup of coffee and wait"
+              "\n------------------------------")
         file = open(username_file)
         user_list = file.readlines()
 
@@ -76,6 +80,10 @@ if args.service == "http":
 
     # When colon file is provided
     elif args.colon_file in sys.argv:
+        print("\033[1;34m------------------------------"
+              "\n     adocracker is started      "
+              "\nTake a cup of coffee and wait"
+              "\n------------------------------")
         file = open(colon_file)
         for line in file.readlines():
             if ":" in line:
@@ -90,16 +98,16 @@ if args.service == "http":
                 if args.response in re.text:  # Change this according to the server respond when login attempt failed
                     pass
                 else:
-                    print("\n------------------------------------------------"
-                          "\n Username and Password found", '\033[1;92m', user, pwd,
-                          "\n------------------------------------------------")
+                    print("\n\033[1;92m----------------------------------------------------"
+                          "\n Username and Password found:", user, "=>", pwd,
+                          "----------------------------------------------------------")
                     break
-        else:
-            print("------------------------------------------------------------------"
-                  "\n Sorry No password or username found on your wordlist"
-                  "\n Please provide wordlist with more words to increase your chance"
-                  "\n----------------------------------------------------------------")
-            exit(0)
+            else:
+                print("------------------------------------------------------------------"
+                        "\n Sorry No password or username found on your wordlist"
+                         "\n Please provide wordlist with more words to increase your chance"
+                        "\n----------------------------------------------------------------")
+                exit(0)
 
     # When password file provided
     else:
