@@ -204,12 +204,6 @@ if args.service == "ssh":
     except KeyboardInterrupt:
         print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
         exit(0)
-    else:
-        print("\n\033[1;31m------------------------------------------------------------------"
-              "\n Sorry!! No password or username found on your wordlist"
-              "\n Please provide wordlist with more words to increase your chance"
-              "\n------------------------------------------------------------------")
-        exit(0)
 
         # When colon_file is provided
         if args.colon_file in sys.argv:
@@ -252,3 +246,9 @@ if args.service == "ssh":
                                   "\n------------------------------------------")
                             exit(0)
                     open_ssh(target, port, user, pwd)
+    else:
+        print("\n\033[1;31m------------------------------------------------------------------"
+              "\n Sorry!! No password or username found on your wordlist"
+              "\n Please provide wordlist with more words to increase your chance"
+              "\n------------------------------------------------------------------")
+        exit(0)
