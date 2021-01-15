@@ -241,9 +241,9 @@ if args.service == "ssh":
                                 "\n\033[1;31mConnection was aborted by the software in your host machine... And we don't know why")
                             exit(0)
                         else:
-                            print("\n\033[1;92m-----------------------------------------"
-                                  "\n Password found:", password,
-                                  "\n------------------------------------------")
+                            print("\n\033[1;92m-----------------------------------------------------------"
+                                  "\n Username and Password found:", user, "=>", pwd,
+                                  "----------------------------------------------------------")
                             exit(0)
                     open_ssh(target, port, user, pwd)
     else:
