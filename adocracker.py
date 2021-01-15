@@ -64,9 +64,9 @@ if args.service == "http":
                     break
 
                 print('\033[1;37m''[+]', user, '_', password)
-            post = {'username': user, 'password': password, 'submit': "Submit"}
+            post = {f'{form1}': user, f'{form2}': password, 'submit': "Submit"}
             re = requests.post(target, data=post)
-            if args.response in re.text:  # Change this according to the server respond when login attempt failed
+            if args.response in re.text:
                 pass
             else:
                 print("\n\033[1;92m-----------------------------------------"
