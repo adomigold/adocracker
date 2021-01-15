@@ -153,10 +153,10 @@ if args.service == "http":
 # Attacking SSH
 if args.service == "ssh":
     try:
-        print("\033[1;34m------------------------------"
+        print("\033[1;34m---------------------------------"
               "\n     adocracker is started      "
               "\n  Take a cup of coffee and wait"
-              "\n------------------------------")
+              "\n---------------------------------")
 
         target = args.attack
         port = args.port
@@ -189,11 +189,11 @@ if args.service == "ssh":
                             print('\033[1;37m''[+]', user, '_', password)
                         return False
                     except paramiko.ssh_exception.NoValidConnectionsError :
-                        print(f"\033[1;33m[*] Connection timeout, The script will restart connection in delay... Press CTRL+c to cancel")
+                        print(f"\n\033[1;33m[*] Connection timeout, The script will restart connection in delay... Press CTRL+c to cancel")
                         time.sleep(10)
                         return open_ssh(target, port, user, password)
                     except paramiko.ssh_exception.SSHException:
-                        print("\033[1;31mConnection was aborted by the software in your host machine... And we don't know why")
+                        print("\n\033[1;31mConnection was aborted by the software in your host machine... And we don't know why")
                         exit(0)
                     else:
                         print("\n\033[1;92m-----------------------------------------"
