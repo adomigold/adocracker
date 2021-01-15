@@ -14,7 +14,7 @@ print("Author @adomigold,", "Github account: https://github.com/adomigold/ \n")
 parser = argparse.ArgumentParser()
 parser.add_argument('-a', '--attack', type=str, help="Target url or IP adress")
 parser.add_argument('-l', '--login', type=str, help="Target username")
-parser.add_argument('-L', '--login_files', type=str, help="File contain usernames")
+parser.add_argument('-L', '--login_file', type=str, help="File contain usernames")
 parser.add_argument('-C', '--colon_file', help="Colon separated 'login:password' files")
 parser.add_argument('-p', '--password', type=str, help="Target Password")
 parser.add_argument('-P', '--password_file', type=str, help="File contains passwords")
@@ -52,7 +52,7 @@ if args.service == "http":
               "\n     adocracker is started      "
               "\nTake a cup of coffee and wait"
               "\n------------------------------")
-        file = open(username_file)
+        file = open(login_file)
         user_list = file.readlines()
 
         for user in user_list:
