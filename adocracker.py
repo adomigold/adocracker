@@ -288,7 +288,7 @@ if args.service == "ssh":
                               "\n Password found:", pwd,
                               "\n------------------------------------------")
                         exit(0)
-                open_ssh(target, port, user, password)
+                open_ssh(target, port, username, pwd)
 
     except KeyboardInterrupt:
         print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
