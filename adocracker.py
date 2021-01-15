@@ -194,7 +194,7 @@ if args.service == "ssh":
                         return open_ssh(target, port, user, password)
                     else:
                         print(f"Password found : {password}")
-                        return True
+                        exit(0)
                 open_ssh(target, port, user, password)
     except KeyboardInterrupt:
         print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
