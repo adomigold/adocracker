@@ -69,8 +69,8 @@ if args.service == "http":
             if args.response in re.text:  # Change this according to the server respond when login attempt failed
                 pass
             else:
-                print("\n-----------------------------------------"
-                      "\n Username found", '\033[1;92m', user,
+                print("\n\033[1;92m-----------------------------------------"
+                      "\n Username found", user,
                       "\n-----------------------------------------")
                 break
         else:
