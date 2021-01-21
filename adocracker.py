@@ -8,8 +8,8 @@ import time
 import paramiko
 import ftplib
 
-banner = "AdoCracker"
-print(figlet_format('\033[1;34m', banner, font="standard"))
+banner = '\033[1;34m'"AdoCracker"
+print(figlet_format(banner, font="standard"))
 print("\033[1;92m[*] This is a password cracker tool for HTTP, FTP, SSH and SMTP")
 print("\033[1;33m[*] This tool is for educational purpose only \n\033[1;31m[*] Do not use it on systems you are not "
       "authorized to")
