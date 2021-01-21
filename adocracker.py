@@ -69,7 +69,7 @@ if args.service == "http":
                     if args.verbose != "show":
                         break
 
-                    print('\033[1;37m''[+]', user, '_', password)
+                    print('\033[1;37m''[+]', user, '-', password)
                 post = {f'{form1}': user, f'{form2}': password, 'submit': "Submit"}
                 re = requests.post(target, data=post)
                 if args.response in re.text:
@@ -100,7 +100,7 @@ if args.service == "http":
                     if args.verbose in sys.argv:
                         if args.verbose != "show":
                             break
-                        print('\033[1;37m''[+]', user, '_', pwd)
+                        print('\033[1;37m''[+]', user, '-', pwd.strip())
                     post = {f'{form1}': user, f'{form2}': pwd.strip(), 'submit': "Submit"}
                     re = requests.post(target, data=post)
                     if args.response in re.text:
@@ -133,7 +133,7 @@ if args.service == "http":
                     if args.verbose != "show":
                         break
 
-                    print('\033[1;37m''[+]', username, '_', pwd)
+                    print('\033[1;37m''[+]', username, '-', pwd)
                 post = {f'{form1}': username, f'{form2}': pwd, 'submit': "Submit"}
                 re = requests.post(target, data=post)
                 if args.response in re.text:
@@ -189,7 +189,7 @@ elif args.service == "ssh":
                         if args.verbose in sys.argv:
                             if args.verbose != "show":
                                 return False
-                            print('\033[1;37m''[+]', user, '_', password)
+                            print('\033[1;37m''[+]', user, '-', password)
                         return False
                     except paramiko.ssh_exception.NoValidConnectionsError:
                         print(
@@ -235,7 +235,7 @@ elif args.service == "ssh":
                             if args.verbose in sys.argv:
                                 if args.verbose != "show":
                                     return False
-                                print('\033[1;37m''[+]', user, '_', pwd)
+                                print('\033[1;37m''[+]', user, '-', pwd.strip())
                             return False
                         except paramiko.ssh_exception.NoValidConnectionsError:
                             print(
@@ -281,7 +281,7 @@ elif args.service == "ssh":
                         if args.verbose in sys.argv:
                             if args.verbose != "show":
                                 return False
-                            print('\033[1;37m''[+]', username, '_', pwd)
+                            print('\033[1;37m''[+]', username, '-', pwd)
                         return False
                     except paramiko.ssh_exception.NoValidConnectionsError:
                         print(
@@ -344,7 +344,7 @@ elif args.service == "ftp":
                             server.connect(target, port, timeout=10)
                             server.login(user, password)
                         except ftplib.error_perm:
-                            print('\033[1;37m''[+]', user, '_', password)
+                            print('\033[1;37m''[+]', user, '-', password)
                             pass
                         except ConnectionRefusedError:
                             print(
@@ -374,9 +374,9 @@ elif args.service == "ftp":
                                 exit(0)
                             try:
                                 server.connect(target, port, timeout=10)
-                                server.login(user, pwd)
+                                server.login(user, pwd.strip())
                             except ftplib.error_perm:
-                                print('\033[1;37m''[+]', user, '_', pwd)
+                                print('\033[1;37m''[+]', user, '-', pwd.strip())
                                 pass
                             except ConnectionRefusedError:
                                 print(
@@ -409,7 +409,7 @@ elif args.service == "ftp":
                                 server.connect(target, port, timeout=10)
                                 server.login(username, pwd)
                             except ftplib.error_perm:
-                                print('\033[1;37m''[+]', username, '_', pwd)
+                                print('\033[1;37m''[+]', username, '-', pwd)
                                 pass
                             except ConnectionRefusedError:
                                 print(
