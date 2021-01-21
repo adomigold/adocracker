@@ -380,6 +380,9 @@ elif args.service == "ftp":
                             except ftplib.error_perm:
                                 print('\033[1;37m''[+]', user, '_', pwd)
                                 pass
+                            except ConnectionRefusedError:
+                                print(f"[!] Host: {target} is unreachable")
+                                exit(0)
                             else:
                                 print("\n\033[1;92m-----------------------------------------"
                                       "\n Username and Password found:", user, pwd,
