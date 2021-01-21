@@ -393,35 +393,36 @@ elif args.service == "ftp":
 
         # When password file is provided
         else:
-            file = open(password_file)
-            pwd_list = file.readlines()
+            if args.password_file in sys.argv:
+                file = open(password_file)
+                pwd_list = file.readlines()
 
-            for pwd in pwd_list:
-                pwd = pwd.rstrip()
+                for pwd in pwd_list:
+                    pwd = pwd.rstrip()
 
-                def connect_ftp(target, port, username, pwd):
-                    server = ftplib.FTP()
-                    if args.verbose in sys.argv:
-                        if args.verbose != "show":
-                            exit(0)
-                        try:
-                            server.connect(target, port, timeout=10)
-                            server.login(user, pwd)
-                        except ftplib.error_perm:
-                            print('\033[1;37m''[+]', username, '_', pwd)
-                            pass
-                        except ConnectionRefusedError:
-                            print(
-                                f"\n\033[1;33m[*] Connection timeout, The script will restart connection in 10 "
-                                f"seconds... "
-                                f"Press CTRL+c to cancel")
-                            time.sleep(10)
-                        else:
-                            print("\n\033[1;92m-----------------------------------------"
-                                  "\n Password found:", pwd,
-                                  "\n------------------------------------------")
-                            exit(0)
-                connect_ftp(target, port, user, pwd)
+                    def connect_ftp(target, port, username, pwd):
+                        server = ftplib.FTP()
+                        if args.verbose in sys.argv:
+                            if args.verbose != "show":
+                                exit(0)
+                            try:
+                                server.connect(target, port, timeout=10)
+                                server.login(user, pwd)
+                            except ftplib.error_perm:
+                                print('\033[1;37m''[+]', username, '_', pwd)
+                                pass
+                            except ConnectionRefusedError:
+                                print(
+                                    f"\n\033[1;33m[*] Connection timeout, The script will restart connection in 10 "
+                                    f"seconds... "
+                                    f"Press CTRL+c to cancel")
+                                time.sleep(10)
+                            else:
+                                print("\n\033[1;92m-----------------------------------------"
+                                      "\n Password found:", pwd,
+                                      "\n------------------------------------------")
+                                exit(0)
+                    connect_ftp(target, port, username, pwd)
 
     except KeyboardInterrupt:
         print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
