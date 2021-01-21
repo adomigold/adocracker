@@ -407,7 +407,7 @@ elif args.service == "ftp":
                                 exit(0)
                             try:
                                 server.connect(target, port, timeout=10)
-                                server.login(user, pwd)
+                                server.login(username, pwd)
                             except ftplib.error_perm:
                                 print('\033[1;37m''[+]', username, '_', pwd)
                                 pass
