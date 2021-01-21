@@ -11,7 +11,7 @@ import ftplib
 banner = "AdoCracker"
 print(figlet_format(banner, font="standard"))
 print("\033[1;92m[*] This is a password cracker tool for HTTP, FTP, SSH and SMTP")
-print("033[1;33m[*] This tool is for educational purpose \n033[1;31m[*] Do not use it on systems you are not "
+print("\033[1;33m[*] This tool is for educational purpose \n\033[1;31m[*] Do not use it on systems you are not "
       "authorized to")
 print("\033[1;92m[*] Author @adomigold,", "Github account: https://github.com/adomigold/ \n")
 
