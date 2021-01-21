@@ -319,4 +319,4 @@ elif args.service == "ssh":
 
 # Attacking FTP
 elif args.service == "ftp":
-    
+    exit(0)
