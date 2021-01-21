@@ -5,7 +5,6 @@ import sys
 from pyfiglet import figlet_format
 import argparse
 import time
-import nmap
 import paramiko
 
 banner = "AdoCracker"
@@ -100,7 +99,7 @@ if args.service == "http":
                         print('\033[1;37m''[+]', user, '_', pwd)
                     post = {f'{form1}': user, f'{form2}': pwd.strip(), 'submit': "Submit"}
                     re = requests.post(target, data=post)
-                    if args.response in re.text:  # Change this according to the server respond when login attempt failed
+                    if args.response in re.text:
                         pass
                     else:
                         print("\n\033[1;92m-----------------------------------------------------------"
