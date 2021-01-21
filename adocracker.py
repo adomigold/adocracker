@@ -8,11 +8,11 @@ import time
 import paramiko
 import ftplib
 
-banner = "\033[1;34mAdoCracker"
+banner = "AdoCracker"
 print(figlet_format(banner, font="standard"))
-print("\033[1;31m[*] This is a password cracker tool for HTTP, FTP, SSH and SMTP")
+print("\033[1;92m[*] This is a password cracker tool for HTTP, FTP, SSH and SMTP")
 print("\033[1;31m[*] This tool is for educational purpose \n[*] Do not use it on systems you are not authorized to")
-print("\033[1;31m[*] Author @adomigold,", "Github account: https://github.com/adomigold/ \n")
+print("\033[1;92m[*] Author @adomigold,", "Github account: https://github.com/adomigold/ \n")
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-a', '--attack', type=str, help="Target url or IP adress")
@@ -31,7 +31,7 @@ parser.add_argument('--password_form', type=str, help="Password form as shown on
 args = parser.parse_args()
 
 if len(sys.argv) < 2:
-    print("\nType -h or --help on how to use")
+    print("\n\033[1;37mType -h or --help on how to use")
     exit(0)
 
 # Attacking HTTP Service
