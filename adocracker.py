@@ -8,11 +8,11 @@ import time
 import paramiko
 import ftplib
 
-banner = "AdoCracker"
+banner = "\033[1;34mAdoCracker"
 print(figlet_format(banner, font="standard"))
-print("[*] This is a password cracker tool for HTTP, FTP, SSH and SMTP")
-print("[*] This tool is for educational purpose \n[*] Do not use it on systems you are not authorized to")
-print("[*] Author @adomigold,", "Github account: https://github.com/adomigold/ \n")
+print("\033[1;31m[*] This is a password cracker tool for HTTP, FTP, SSH and SMTP")
+print("\033[1;31m[*] This tool is for educational purpose \n[*] Do not use it on systems you are not authorized to")
+print("\033[1;31m[*] Author @adomigold,", "Github account: https://github.com/adomigold/ \n")
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-a', '--attack', type=str, help="Target url or IP adress")
