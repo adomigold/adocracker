@@ -40,6 +40,7 @@ if len(sys.argv) < 2:
 thread = args.threads
 if thread > 20:
     print("\n\033[1;31mDon't use more than 20 threads or it may lead the target server to crash which you don't want to")
+    exit(0)
 # Attacking HTTP Service
 if args.service == "http":
     try:
