@@ -432,9 +432,16 @@ elif args.service == "ftp":
               "\n Please provide wordlist with more words to increase your chance"
               "\n------------------------------------------------------------------")
         exit(0)
+elif args.service not in sys.argv:
+    print("\n\033[1;31m------------------------------------------------------------------------------"
+          "\n Sorry!! Please specify the service target you want to crack"
+          "\n You can type -h or --help for how to use this tool"
+          "\n----------------------------------------------------------------------------------------")
+    exit(0)
+
 else:
-    print("\n\033[1;31m------------------------------------------------------------------"
-          "\n Sorry!! That service is not implemented now"
-          "\n You are welcome to send a pull request to add more features on our repository"
-          "\n------------------------------------------------------------------")
+    print("\n\033[1;31m-----------------------------------------------------------------------------------"
+          "\n[+] Sorry!! That service is not implemented now!"
+          "\n[+] You are welcome to send a pull request to add more features on our tool"
+          "\n----------------------------------------------------------------------------------------------")
     exit(0)
