@@ -1,6 +1,6 @@
 # adocracker
 ### Description:
-> This is a one file python password cracker which use wordlist to crack passwords for HTTP, FTP, SSH and SMTP
+> This is a one file python password cracker which use wordlist to crack passwords for HTTP, FTP, and SSH
 
 ### Installation:
 > git clone https://github.com/adomigold/adocracker.git
