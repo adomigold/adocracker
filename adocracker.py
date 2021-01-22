@@ -307,7 +307,7 @@ elif args.service == "ssh":
                 open_ssh(target, port, username, pwd)
 
         for t in range(thread):
-            t = Thread(target=open_ssh)
+            t = threading.Thread(target=open_ssh)
             t.daemon = True
             t.start()
 
@@ -435,7 +435,7 @@ elif args.service == "ftp":
                     connect_ftp(target, port, username, pwd)
 
         for t in range(thread):
-            t = Thread(target=connect_ftp)
+            t = threading.Thread(target=connect_ftp)
             t.daemon = True
             t.start()
 
