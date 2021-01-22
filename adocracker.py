@@ -213,6 +213,12 @@ elif args.service == "ssh":
                               "\n------------------------------------------")
                         exit(0)
                 open_ssh(target, port, user, password)
+
+                for t in range(thread):
+                    t = threading.Thread(target=open_ssh(target, port, user, password))
+                    t.daemon = True
+                    t.start()
+
             else:
                 print("\n\033[1;31m------------------------------------------------------------------"
                       "\n Sorry!! No password or username found on your wordlist"
@@ -259,6 +265,12 @@ elif args.service == "ssh":
                                   "----------------------------------------------------------")
                             exit(0)
                     open_ssh(target, port, user, pwd)
+
+                    for t in range(thread):
+                        t = threading.Thread(target=open_ssh(target, port, user, pwd))
+                        t.daemon = True
+                        t.start()
+
             else:
                 print("\n\033[1;31m------------------------------------------------------------------"
                       "\n Sorry!! No password or username found on your wordlist"
@@ -306,10 +318,10 @@ elif args.service == "ssh":
                         exit(0)
                 open_ssh(target, port, username, pwd)
 
-        for t in range(thread):
-            t = threading.Thread(target=open_ssh)
-            t.daemon = True
-            t.start()
+                for t in range(thread):
+                    t = threading.Thread(target=open_ssh(target, port, username, pwd))
+                    t.daemon = True
+                    t.start()
 
     except KeyboardInterrupt:
         print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
@@ -369,6 +381,12 @@ elif args.service == "ftp":
                             exit(0)
                 connect_ftp(target, port, user, password)
 
+                for t in range(thread):
+                    t = threading.Thread(target=connect_ftp(target, port, user, password))
+                    t.daemon = True
+                    t.start()
+
+
         # When colon_file is provided
         if args.colon_file in sys.argv:
             file = open(colon_file)
@@ -400,6 +418,12 @@ elif args.service == "ftp":
                                       "\n------------------------------------------")
                                 exit(0)
                     connect_ftp(target, port, user, pwd)
+
+                    for t in range(thread):
+                        t = threading.Thread(target=connect_ftp(target, port, user, pwd))
+                        t.daemon = True
+                        t.start()
+
 
         # When password file is provided
         else:
@@ -434,10 +458,10 @@ elif args.service == "ftp":
                                 exit(0)
                     connect_ftp(target, port, username, pwd)
 
-        for t in range(thread):
-            t = threading.Thread(target=connect_ftp)
-            t.daemon = True
-            t.start()
+                    for t in range(thread):
+                        t = threading.Thread(target=connect_ftp(target, port, username, pwd))
+                        t.daemon = True
+                        t.start()
 
     except KeyboardInterrupt:
         print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
