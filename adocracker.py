@@ -7,6 +7,7 @@ import time
 import paramiko
 import ftplib
 from termcolor import colored
+import threading
 
 banner = "AdoCracker"
 print((colored(figlet_format(banner, font="standard"), color="blue")))
@@ -22,7 +23,7 @@ parser.add_argument('-L', '--login_file', type=str, help="File contain usernames
 parser.add_argument('-C', '--colon_file', help="Colon separated 'login:password' files")
 parser.add_argument('-p', '--password', type=str, help="Target Password")
 parser.add_argument('-P', '--password_file', type=str, help="File contains passwords")
-parser.add_argument('-t', '--threads', type=str, help="Thread connection")
+parser.add_argument('-t', '--threads', type=int, help="Thread connection")
 parser.add_argument('-v', '--verbose', nargs='?', help="Enter show to see login attempts")
 parser.add_argument('-s', '--service', type=str, help="Acceptable services are http, ftp, ssh and smtp")
 parser.add_argument('-r', '--response', type=str, help="Web response after login failed attempt")
@@ -35,6 +36,10 @@ if len(sys.argv) < 2:
     print("\n\033[1;37mType -h or --help on how to use")
     exit(0)
 
+# Create a thread number
+thread = args.threads
+if thread > 20:
+    print("\n\033[1;31mDon't use more than 20 threads or it may lead the target server to crash which you don't want to")
 # Attacking HTTP Service
 if args.service == "http":
     try:
@@ -436,7 +441,7 @@ elif args.service not in sys.argv:
     print("\n\033[1;31m-----------------------------------------------------------------"
           "\n[+] Sorry!! Please specify the service target you want to crack"
           "\n[+] You can type -h or --help for how to use this tool"
-          "\n----------------------------------------------------------------")
+          "\n-----------------------------------------------------------------")
     exit(0)
 
 else:
