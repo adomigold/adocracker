@@ -306,6 +306,11 @@ elif args.service == "ssh":
                         exit(0)
                 open_ssh(target, port, username, pwd)
 
+        for t in range(thread):
+            t = Thread(target=open_ssh)
+            t.daemon = True
+            t.start()
+
     except KeyboardInterrupt:
         print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
         exit(0)
@@ -428,6 +433,11 @@ elif args.service == "ftp":
                                       "\n------------------------------------------")
                                 exit(0)
                     connect_ftp(target, port, username, pwd)
+
+        for t in range(thread):
+            t = Thread(target=connect_ftp)
+            t.daemon = True
+            t.start()
 
     except KeyboardInterrupt:
         print("\n\033[1;31m[*] CTRL+c detected... Exiting now")
