@@ -1,4 +1,3 @@
-import os
 import socket
 import requests
 import sys
@@ -11,7 +10,7 @@ from termcolor import colored
 
 banner = "AdoCracker"
 print((colored(figlet_format(banner, font="standard"), color="blue")))
-print("\033[1;92m[*] This is a password cracker tool for HTTP, FTP, SSH and SMTP")
+print("\033[1;92m[*] This is a password cracker tool for HTTP, FTP and SSH")
 print("\033[1;33m[*] This tool is for educational purpose only \n\033[1;31m[*] Do not use it on systems you are not "
       "authorized to")
 print("\033[1;92m[*] Author @adomigold,", "Github account: https://github.com/adomigold/ \n\033[1;37m")
@@ -433,3 +432,9 @@ elif args.service == "ftp":
               "\n Please provide wordlist with more words to increase your chance"
               "\n------------------------------------------------------------------")
         exit(0)
+else:
+    print("\n\033[1;31m------------------------------------------------------------------"
+          "\n Sorry!! That service is not implemented now"
+          "\n You are welcome to send a pull request to add more features on our repository"
+          "\n------------------------------------------------------------------")
+    exit(0)
